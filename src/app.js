@@ -9,6 +9,10 @@ import roomRoutes from "./routes/room.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import gifRoutes from "./routes/gif.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import {
+	globalLimiter,
+	authLimiter,
+} from "./middlewares/ratelimiter.middlwares.js";
 
 import errorMiddleware from "./middlewares/error.middlewares.js";
 
@@ -20,8 +24,9 @@ app.use(helmet());
 app.use(exress.json());
 app.use(cookieParser());
 app.use(errorMiddleware);
+app.use(globalLimiter);
 
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authLimiter, authRoutes);
 
 app.use("/api/rooms", roomRoutes);
 
