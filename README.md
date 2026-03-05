@@ -1,4 +1,4 @@
-# 💬 ArkThread API
+# 💬 ChatterBox API
 
 A real-time chat backend built with **Node.js**, **Express**, **Socket.IO**, **PostgreSQL**, and **Redis**. This project covers JWT authentication, chat rooms, file/image sharing, GIF support via Giphy, online status, typing indicators, and paginated message history.
 
@@ -6,18 +6,18 @@ A real-time chat backend built with **Node.js**, **Express**, **Socket.IO**, **P
 
 ## 🛠️ Tech Stack
 
-| Layer        | Tool                          |
-| ------------ | ----------------------------- |
-| Runtime      | Node.js                       |
-| Framework    | Express.js                    |
-| Real-time    | Socket.IO                     |
-| Database     | PostgreSQL                    |
-| ORM          | Prisma                        |
-| Cache        | Redis                         |
-| Auth         | JWT (Access + Refresh Tokens) |
-| File Storage | Cloudinary                    |
-| GIF Search   | Giphy API                     |
-| Validation   | Zod                           |
+| Layer | Tool |
+|---|---|
+| Runtime | Node.js |
+| Framework | Express.js |
+| Real-time | Socket.IO |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Cache | Redis |
+| Auth | JWT (Access + Refresh Tokens) |
+| File Storage | Cloudinary |
+| GIF Search | Giphy API |
+| Validation | Zod |
 
 ---
 
@@ -39,7 +39,7 @@ A real-time chat backend built with **Node.js**, **Express**, **Socket.IO**, **P
 ## 📁 Project Structure
 
 ```
-arkthread/
+chatterbox/
 ├── src/
 │   ├── config/          # DB, Redis, Cloudinary config
 │   ├── controllers/     # Route handler logic
@@ -72,8 +72,8 @@ arkthread/
 
 ```bash
 # Clone the repo
-git clone https://github.com/rayan-1005/arkthread.git
-cd arkthread
+git clone https://github.com/yourusername/chatterbox.git
+cd chatterbox
 
 # Install dependencies
 npm install
@@ -104,7 +104,7 @@ docker-compose up -d
 PORT=5000
 
 # Database
-DATABASE_URL=postgresql://user:password@localhost:5432/arkthread
+DATABASE_URL=postgresql://user:password@localhost:5432/chatterbox
 
 # Redis
 REDIS_URL=redis://localhost:6379
@@ -129,54 +129,49 @@ GIPHY_API_KEY=your_giphy_api_key
 ## 📡 API Endpoints
 
 ### Auth
-
-| Method | Endpoint                  | Description          |
-| ------ | ------------------------- | -------------------- |
-| POST   | `/api/auth/register`      | Register a new user  |
-| POST   | `/api/auth/login`         | Login and get tokens |
-| POST   | `/api/auth/logout`        | Logout user          |
-| POST   | `/api/auth/refresh-token` | Get new access token |
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login and get tokens |
+| POST | `/api/auth/logout` | Logout user |
+| POST | `/api/auth/refresh-token` | Get new access token |
 
 ### Rooms
-
-| Method | Endpoint                 | Description      |
-| ------ | ------------------------ | ---------------- |
-| POST   | `/api/rooms`             | Create a room    |
-| GET    | `/api/rooms`             | Get my rooms     |
-| GET    | `/api/rooms/:id`         | Get room details |
-| POST   | `/api/rooms/:id/members` | Add a member     |
-| DELETE | `/api/rooms/:id/members` | Leave a room     |
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/rooms` | Create a room |
+| GET | `/api/rooms` | Get my rooms |
+| GET | `/api/rooms/:id` | Get room details |
+| POST | `/api/rooms/:id/members` | Add a member |
+| DELETE | `/api/rooms/:id/members` | Leave a room |
 
 ### Messages
-
-| Method | Endpoint                         | Description            |
-| ------ | -------------------------------- | ---------------------- |
-| GET    | `/api/rooms/:id/messages`        | Get paginated messages |
-| POST   | `/api/rooms/:id/messages/upload` | Upload image/file      |
-| GET    | `/api/gifs/search?q=query`       | Search GIFs via Giphy  |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/rooms/:id/messages` | Get paginated messages |
+| POST | `/api/rooms/:id/messages/upload` | Upload image/file |
+| GET | `/api/gifs/search?q=query` | Search GIFs via Giphy |
 
 ---
 
 ## ⚡ Socket.IO Events
 
 ### Client → Server
-
-| Event          | Payload                              | Description             |
-| -------------- | ------------------------------------ | ----------------------- |
-| `join_room`    | `{ roomId }`                         | Join a chat room        |
-| `leave_room`   | `{ roomId }`                         | Leave a chat room       |
-| `send_message` | `{ roomId, content, type, fileUrl }` | Send a message          |
-| `typing`       | `{ roomId, isTyping }`               | Broadcast typing status |
+| Event | Payload | Description |
+|---|---|---|
+| `join_room` | `{ roomId }` | Join a chat room |
+| `leave_room` | `{ roomId }` | Leave a chat room |
+| `send_message` | `{ roomId, content, type, fileUrl }` | Send a message |
+| `typing` | `{ roomId, isTyping }` | Broadcast typing status |
 
 ### Server → Client
-
-| Event          | Payload                          | Description              |
-| -------------- | -------------------------------- | ------------------------ |
-| `new_message`  | `{ message }`                    | New message received     |
-| `user_typing`  | `{ userId, username, isTyping }` | Someone is typing        |
-| `user_online`  | `{ userId }`                     | User came online         |
-| `user_offline` | `{ userId }`                     | User went offline        |
-| `room_joined`  | `{ roomId, members }`            | Joined room confirmation |
+| Event | Payload | Description |
+|---|---|---|
+| `new_message` | `{ message }` | New message received |
+| `user_typing` | `{ userId, username, isTyping }` | Someone is typing |
+| `user_online` | `{ userId }` | User came online |
+| `user_offline` | `{ userId }` | User went offline |
+| `room_joined` | `{ roomId, members }` | Joined room confirmation |
 
 ---
 
@@ -193,10 +188,10 @@ Message types supported: `TEXT`, `IMAGE`, `FILE`, `GIF`
 ## 🏗️ Development Phases
 
 - [x] **Phase 1** — Express setup, Prisma, PostgreSQL, JWT Auth
-- [ ] **Phase 2** — Rooms, Messages, Basic Socket.IO
-- [ ] **Phase 3** — Real-time messaging, Online status, Typing indicators
-- [ ] **Phase 4** — File/Image uploads, GIF sharing
-- [ ] **Phase 5** — Validation, Rate limiting, Docker, Deployment
+- [x] **Phase 2** — Rooms, Messages, Basic Socket.IO
+- [x] **Phase 3** — Real-time messaging, Online status, Typing indicators
+- [x] **Phase 4** — File/Image uploads, GIF sharing
+- [x] **Phase 5** — Validation, Rate limiting, Docker, Deployment
 
 ---
 
