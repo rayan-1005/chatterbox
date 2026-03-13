@@ -8,6 +8,6 @@ export const globalLimiter = rateLimit({
 
 export const authLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 10, // max 10 login attempts per 15 mins
+	max: 100, // max 10 login attempts per 15 mins
 	message: { error: "Too many auth attempts, please try again later" },
 });

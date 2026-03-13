@@ -1,4 +1,4 @@
-import exress from "express";
+import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -9,6 +9,7 @@ import roomRoutes from "./routes/room.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import gifRoutes from "./routes/gif.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import {
 	globalLimiter,
 	authLimiter,
@@ -16,12 +17,17 @@ import {
 
 import errorMiddleware from "./middlewares/error.middlewares.js";
 
-const app = exress();
+const app = express();
 
-app.use(cors());
+app.use(
+	cors({
+		origin: "http://localhost:3000",
+		credentials: true,
+	}),
+);
+app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(exress.json());
 app.use(cookieParser());
 app.use(errorMiddleware);
 app.use(globalLimiter);
@@ -35,6 +41,8 @@ app.use("/api/rooms", uploadRoutes);
 app.use("/api", messageRoutes);
 
 app.use("/api/gifs", gifRoutes);
+
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
